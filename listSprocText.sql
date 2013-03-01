@@ -1,12 +1,12 @@
 /*
-  author:		Yong Guan
-  date:			02/16/2012
+  author:       Yong Guan
+  date:         02/16/2012
   description:
-	Generate the creation script for all views, functions, and stored procedures in a database
-	and sort them by name ascending.
+    Generate the creation script for all views, functions, and stored procedures in a database
+    and sort them by name ascending.
   use case:
-	When comparing two version of database for database, a sorted order list make the comparision
-	a lot easier.
+    When comparing two version of database for database, a sorted order list make the comparision
+    a lot easier.
 */
 
 DECLARE @objectName nvarchar(200)
@@ -25,7 +25,7 @@ INTO @objectName
 
 WHILE @@FETCH_STATUS = 0
 BEGIN
-	exec sp_helptext @objname = @objectName
+    exec sp_helptext @objname = @objectName
     FETCH NEXT FROM view_name_cursor 
     INTO @objectName
 END
@@ -47,7 +47,7 @@ INTO @objectName
 
 WHILE @@FETCH_STATUS = 0
 BEGIN
-	exec sp_helptext @objname = @objectName
+    exec sp_helptext @objname = @objectName
     FETCH NEXT FROM function_name_cursor 
     INTO @objectName
 END
@@ -68,7 +68,7 @@ INTO @objectName
 
 WHILE @@FETCH_STATUS = 0
 BEGIN
-	exec sp_helptext @objname = @objectName
+    exec sp_helptext @objname = @objectName
     FETCH NEXT FROM sproc_name_cursor 
     INTO @objectName
 END

@@ -1,15 +1,15 @@
 /*
-  author:		Yong Guan
-  date:			01/20/2012
-  description:	Find objects by name across all tables in a database.
-  limitation:	May skip database because sp_MSForEachDB is used. 
-  usage:		exec FindObjectsByName 'partial/full object name'
+  author:       Yong Guan
+  date:         01/20/2012
+  description:  Find objects by name across all tables in a database.
+  limitation:   May skip database because sp_MSForEachDB is used. 
+  usage:        exec FindObjectsByName 'partial/full object name'
   result:
-	Objects found in database {database name}
-	object name
+    Objects found in database {database name}
+    object name
 */
 IF OBJECT_ID('FindObjectsByName') IS NOT NULL
-	DROP PROC FindObjectsByName
+    DROP PROC FindObjectsByName
 GO
 
 CREATE PROCEDURE FindObjectsByName
@@ -29,8 +29,8 @@ WHERE name like ''%[object name]%''
 
 IF @names IS NOT NULL
 BEGIN
- PRINT ''Objects found in database {?}''
- PRINT @names + char(13) + char(13)
+    PRINT ''Objects found in database {?}''
+    PRINT @names + char(13) + char(13)
 END'
 
 SET @command =  REPLACE(@command, '[object name]', @name);
