@@ -35,7 +35,7 @@ DECLARE myCursor CURSOR LOCAL FOR
 OPEN myCursor
 FETCH NEXT FROM myCursor INTO @sub_obj_name_1, @sub_obj_name_2
 WHILE @@FETCH_STATUS = 0 BEGIN 
-    EXEC PrintDependencies @sub_obj_name_1, @sub_obj_name_2
+    EXEC PrintDependenciesThroughComment @sub_obj_name_1, @sub_obj_name_2
     FETCH NEXT FROM myCursor INTO @sub_obj_name_1, @sub_obj_name_2
 END
 CLOSE myCursor
