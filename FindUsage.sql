@@ -5,7 +5,7 @@
   limitation:   none?
   usage:        exec FindUsage 'target object'
   result:
-    {target object} are used by the following objects:
+    {target object} are used by {number} objects:
     sql object name
 */
 IF OBJECT_ID('FindUsage') IS NOT NULL
