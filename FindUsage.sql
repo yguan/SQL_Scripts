@@ -19,16 +19,25 @@ CREATE PROCEDURE FindUsage
 AS
 SET NOCOUNT ON
 
-DECLARE @objectNames VARCHAR(MAX)
+DECLARE @objectNames VARCHAR(MAX), @message VARCHAR(225), @count int
 
-SELECT @objectNames = COALESCE(@objectNames + char(13), '') + o.name
+SELECT o.name
+INTO #names
 FROM syscomments c
 INNER JOIN sysobjects o ON c.id = o.id
 WHERE c.TEXT LIKE '%' + @targetObject + '%'
     and o.name <> @targetObject
 
-PRINT '{' + @targetObject + '} is used by the following objects:'
+SELECT @objectNames = COALESCE(@objectNames + char(13), '') + name
+FROM #names
+
+SELECT @count = COUNT(*) FROM #names
+
+SET @message = '{[object name]} is used by {[count]} objects.' + char(13)
+SET @message = REPLACE(@message, '[object name]', @targetObject)
+SET @message = REPLACE(@message, '[count]', @count)
+
+PRINT REPLACE(@message, '[object name]', @targetObject)
 PRINT @objectNames
     
 GO
-
