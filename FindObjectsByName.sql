@@ -5,7 +5,7 @@
   limitation:   May skip database because sp_MSForEachDB is used. 
   usage:        exec FindObjectsByName 'partial/full object name'
   result:
-    Objects found in database {database name}
+    {number} objects are found in database {database name}
     object name
 */
 IF OBJECT_ID('FindObjectsByName') IS NOT NULL
@@ -17,25 +17,46 @@ CREATE PROCEDURE FindObjectsByName
     @name nvarchar(300)
 )
 AS
+SET NOCOUNT ON
 
-DECLARE @command nvarchar(300)
+CREATE TABLE #dbCount (isFound int)
+INSERT INTO #dbCount VALUES(0)
+
+DECLARE @command nvarchar(max)
 
 SET @command = 'USE ?
 
-DECLARE @names VARCHAR(MAX)
-SELECT @names = COALESCE(@names + char(13),'''') + name
-FROM dbo.sysobjects
+SET NOCOUNT ON
+
+DECLARE @objectCount int
+
+SELECT DISTINCT name
+INTO #db
+FROM sysobjects
 WHERE name like ''%[object name]%''
 
-IF @names IS NOT NULL
+SELECT @objectCount = COUNT(*)
+FROM #db
+
+
+IF @objectCount > 0
 BEGIN
-    PRINT ''Objects found in database {?}''
-    PRINT @names + char(13) + char(13)
+    UPDATE #dbCount SET isFound = 1
+    
+    DECLARE @objectNames nvarchar(max)
+    
+    SELECT @objectNames = COALESCE(@objectNames + char(13), '''') + name
+    FROM #db
+    
+    PRINT REPLACE(''{[object count]} object(s) found in database {?}'', ''[object count]'', @objectCount)
+    PRINT @objectNames + char(13) + char(13)
 END'
 
 SET @command =  REPLACE(@command, '[object name]', @name);
 
 EXEC sp_MSForEachDB @command
 
-GO
+IF EXISTS(SELECT 1 FROM #dbCount WHERE isFound = 0)
+    PRINT '{' + @name + '} is not found'
 
+GO
