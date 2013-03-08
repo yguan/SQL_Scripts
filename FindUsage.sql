@@ -21,7 +21,7 @@ SET NOCOUNT ON
 
 DECLARE @objectNames VARCHAR(MAX), @message VARCHAR(225), @count int
 
-SELECT o.name
+SELECT DISTINCT o.name
 INTO #names
 FROM syscomments c
 INNER JOIN sysobjects o ON c.id = o.id
