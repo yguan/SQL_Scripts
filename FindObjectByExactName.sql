@@ -5,7 +5,7 @@
   limitation:   May skip database because sp_MSForEachDB is used. 
   usage:        exec FindObjectByExactName 'tartgetObjectName'
   result:
-    {object name} found in database
+    {object name} is found in {number} database(s)
       [database name 1]
       [database name 2]
 */
@@ -18,18 +18,35 @@ CREATE PROCEDURE FindObjectByExactName
     @name nvarchar(300)
 )
 AS
+SET NOCOUNT ON
 
-DECLARE @command nvarchar(300)
+CREATE TABLE #db (name nvarchar(300))
+
+DECLARE
+     @command nvarchar(max)
+    ,@dbCount int
+    ,@dbNames nvarchar(max)
+    ,@message nvarchar(300)
 
 SET @command = 'USE ? 
 IF OBJECT_ID(''[object name]'') IS NOT NULL
-    PRINT '' ?''
+    INSERT INTO #db VALUES(''?'')
 '
 
-SET @command =  REPLACE(@command, '[object name]', @name);
+SET @command =  REPLACE(@command, '[object name]', @name)
 
-PRINT '{' + @name + '} found in database '
 EXEC sp_MSForEachDB @command
 
-GO
+SELECT @dbCount = COUNT(1)
+FROM #db
 
+SELECT @dbNames = COALESCE(@dbNames + char(13), '') + name
+FROM #db
+
+SET @message = '{[object name]} is found in {[db count]} database(s)' + char(13) + char(13)
+SET @message = REPLACE(@message, '[object name]', @name)
+SET @message = REPLACE(@message, '[db count]', COALESCE(@dbCount, 0))
+
+PRINT @message + COALESCE(@dbNames, '')
+
+GO
