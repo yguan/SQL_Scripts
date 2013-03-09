@@ -22,21 +22,21 @@ If you want to visualize the dependencies, you can copy the output, and paste it
 
 The stored procedures described in this section allow you to find the databases that contains the target object.
 
-FindObjectByExactName.sql
+`FindObjectByExactName.sql`
 * It only searches the target object by the exact name specifies in the parameter.
 
-FindObjectsByName.sql
+`FindObjectsByName.sql`
 * It searches the target object with the LIKE clause, that is, partial name and wild card characters are supported.
 
 ## Find the Usage of A SQL Object in A Database
 
-FindUsage.sql
+`FindUsage.sql`
 * It find the objects that uses the target object directly.
 * It support partial name and wild card characters.
 
 ## Generate All Views, Stored Procedures, and Functions for the Ease of Comparision
 
-listSprocText.sql
+`listSprocText.sql`
 * It is only a SQL script.
 * It output the creation scripts for views, stored procedures, and functions order by name in group. It sort the script within each group.
 
