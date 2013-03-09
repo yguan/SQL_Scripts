@@ -4,7 +4,7 @@ This repository contains some useful SQL stored procedures and functions. Each f
 
 `Most of the scripts can be easily modified to be used Oracle or MySQL.`
 
-## Find Dependencies of A SQL object in A Database
+## Find dependencies of a SQL object in a database
 
 The stored procedures described in this section allow you to find the objects that use the target object directly and indirectly. For example, if stored procedure 1 uses the target table, and stored procedure 2 use stored procedure 1, stored procedure 2 will be shown in the results.
 
@@ -18,7 +18,7 @@ The output of these stored procedures are in the format of `[object 1] -> [targe
 
 If you want to visualize the dependencies, you can copy the output, and paste it into [arbor.js's graph visualization page](http://arborjs.org/halfviz). You can add this color settings `{color:#b01700}` to the visualization page as a new line to make the text more readable.
 
-## Find object across all databases in a database server
+## Find a SQL object across all databases in a database server
 
 The stored procedures described in this section allow you to find the databases that contains the target object.
 
@@ -28,13 +28,13 @@ The stored procedures described in this section allow you to find the databases 
 `FindObjectsByName.sql`
 * It searches the target object with the LIKE clause, that is, partial name and wild card characters are supported.
 
-## Find the Usage of A SQL Object in A Database
+## Find the usage of a SQL object in a database
 
 `FindUsage.sql`
 * It find the objects that uses the target object directly.
 * It support partial name and wild card characters.
 
-## Generate All Views, Stored Procedures, and Functions for the Ease of Comparision
+## Generate all views, stored procedures, and functions for the ease of comparision
 
 `listSprocText.sql`
 * It is only a SQL script.
