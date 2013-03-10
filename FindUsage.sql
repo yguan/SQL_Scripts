@@ -30,6 +30,7 @@ WHERE c.TEXT LIKE '%' + @targetObject + '%'
 
 SELECT @objectNames = COALESCE(@objectNames + char(13), '') + name
 FROM #names
+ORDER BY name ASC
 
 SELECT @count = COUNT(*) FROM #names
 

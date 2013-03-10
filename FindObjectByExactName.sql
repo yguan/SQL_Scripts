@@ -42,6 +42,7 @@ FROM #db
 
 SELECT @dbNames = COALESCE(@dbNames + char(13), '') + name
 FROM #db
+ORDER BY name ASC
 
 SET @message = '{[object name]} is found in {[db count]} database(s)' + char(13) + char(13)
 SET @message = REPLACE(@message, '[object name]', @name)

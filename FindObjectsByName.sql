@@ -34,6 +34,7 @@ SELECT DISTINCT name
 INTO #db
 FROM sysobjects
 WHERE name like ''%[object name]%''
+ORDER BY name ASC
 
 SELECT @objectCount = COUNT(*)
 FROM #db
