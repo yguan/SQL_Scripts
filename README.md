@@ -27,6 +27,7 @@ The stored procedures described in this section allow you to find the databases 
 
 `FindObjectsByName.sql`
 * It searches the target object with the LIKE clause, that is, partial name and wild card characters are supported.
+* By default it searches against the current database. With the second parameter set to 1, it will search all databases.
 
 ## Find the usage of a SQL object in a database
 
